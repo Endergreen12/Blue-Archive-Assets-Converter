@@ -29,3 +29,5 @@ https://dotnet.microsoft.com/ja-jp/download/dotnet/6.0
 これは自分用に作ったので説明が雑なところもあるかもです
 
 もし起動しない場合はランタイムが入ってないかもです
+
+ちなみに"Unwelcome School"は"Audio\BGM\Theme_07.ogg"です
