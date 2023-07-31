@@ -95,12 +95,16 @@ for (int i = 0; i < pathList.Count; i++)
                 File.Delete(willBeCopiedPath);
             }
 
-            if (!File.Exists(willBeCopiedPath))
+            if (!File.Exists(willBeCopiedPath) && File.Exists(sourcePath))
             {
                 if (verboseMode)
                     Console.WriteLine("ファイルをコピー: {0}", willBeCopiedPath);
 
                 File.Copy(sourcePath, willBeCopiedPath, false);
+            } else
+            {
+                if (verboseMode)
+                    Console.WriteLine("ファイルのコピーをスキップ: {0}", willBeCopiedPath);
             }
         }
     }
