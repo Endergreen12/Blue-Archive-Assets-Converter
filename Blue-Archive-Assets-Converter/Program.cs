@@ -59,6 +59,7 @@ if(folderName != null && folderName != "") // 変換するフォルダが指定�
 if (verboseMode)
     Console.WriteLine("ファイルの変換を開始");
 
+int skippedFilesAmount = 0;
 for (int i = 0; i < pathList.Count; i++)
 {
     string[] files = new string[] { };
@@ -75,10 +76,10 @@ for (int i = 0; i < pathList.Count; i++)
         string willBeCopiedPath = "";
         if (destPath != null)
             willBeCopiedPath = Path.Combine(destPath, copyPath);
-        string sourcePath = files[0].Substring(0, files[0].IndexOf("_"));
+        string sourcePath = files[0].Substring(0, files[0].LastIndexOf("_"));
         if (destPath != null)
         {
-            string dir = Path.Combine(destPath, copyPath.Replace(fileNameList[i], ""));
+            string dir = Path.Combine(destPath, copyPath.Replace(fileNameList[i], "")); // フォルダが存在するかを確認するためReplaceでファイル名を消している
             if (!Directory.Exists(dir))
             {
                 if (verboseMode)
@@ -105,6 +106,8 @@ for (int i = 0; i < pathList.Count; i++)
             {
                 if (verboseMode)
                     Console.WriteLine("ファイルのコピーをスキップ: {0}", willBeCopiedPath);
+
+                skippedFilesAmount++;
             }
         }
     }
@@ -113,5 +116,6 @@ for (int i = 0; i < pathList.Count; i++)
 }
 
 UpdateConsoleTitle(Status.Done);
+Console.WriteLine("スキップされたファイル数: {0}", skippedFilesAmount);
 Console.WriteLine("完了しました。何かキーを押して終了します...");
 Console.Read();
