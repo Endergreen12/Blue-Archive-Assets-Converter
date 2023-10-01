@@ -32,7 +32,7 @@ if (path != null)
 {
     pathList = GetTypeList(path, "path");
     crcList = GetTypeList(path, "Crc");
-    fileNameList = GetTypeList(path, "fileName");
+    fileNameList = GetTypeList(path, "FileName");
 }
 
 if(folderName != null && folderName != "") // 変換するフォルダが指定された場合、ここでそのフォルダ以外のものをリストから削除
