@@ -66,9 +66,9 @@ for (int i = 0; i < pathList.Count; i++)
     if (path != null)
     {
         if (verboseMode)
-            Console.WriteLine("ソースファイルが存在するか確認: {0}", $"*_{crcList[i]}.dat");
+            Console.WriteLine("ソースファイルが存在するか確認: {0}", $"*_{crcList[i]}");
 
-        files = Directory.GetFiles(path, $"*_{crcList[i]}.dat");
+        files = Directory.GetFiles(path, $"*_{crcList[i]}");
     }
     if (files.Length >= 1)
     {
@@ -76,7 +76,7 @@ for (int i = 0; i < pathList.Count; i++)
         string willBeCopiedPath = "";
         if (destPath != null)
             willBeCopiedPath = Path.Combine(destPath, copyPath);
-        string sourcePath = files[0].Substring(0, files[0].LastIndexOf("_"));
+        string sourcePath = files[0];
         if (destPath != null)
         {
             string dir = Path.Combine(destPath, copyPath.Replace(fileNameList[i], "")); // フォルダが存在するかを確認するためReplaceでファイル名を消している
