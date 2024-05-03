@@ -1,5 +1,31 @@
 # Blue-Archive-Assets-Converter
 
+## 重要 / Important
+
+現在、このアプリは仕様変更により最新のブルーアーカイブと互換性がなくなっています。
+
+Currently, this application is no longer compatible with the latest Blue Archive due to specification changes.
+
+現在、コードの修正を進めていますが、おそらくコードのほとんどを書き直すことになるのでかなり時間がかかることが予想されます。
+
+I'm currently in the process of revising the code,
+
+but it will probably take quite some time as I will probably have to rewrite most of the code.
+
+## TODO
+
+最新バージョンへの対応
+
+Support for the latest version
+
+READMEの多言語化対応
+
+Multilingualization of README
+
+アプリの多言語化対応
+
+Multilingual support for apps
+
 ## これは何？
 
 このアプリケーションはブルーアーカイブのアセットファイルを元のファイル名に直して簡単に開けるようにするアプリです。
