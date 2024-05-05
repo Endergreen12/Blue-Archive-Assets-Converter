@@ -1,5 +1,7 @@
 # Blue-Archive-Assets-Converter
 
+[English](/README_en.md)
+
 ## これは何？
 
 一言でいえばブルアカのMediaPatchをすべて元の形式に戻すやつです
