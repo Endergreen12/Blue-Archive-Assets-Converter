@@ -1,51 +1,27 @@
 # Blue-Archive-Assets-Converter
 
-## 重要 / Important
-
-現在、このアプリは仕様変更により最新のブルーアーカイブと互換性がなくなっています。
-
-Currently, this application is no longer compatible with the latest Blue Archive due to specification changes.
-
-現在、コードの修正を進めていますが、おそらくコードのほとんどを書き直すことになるのでかなり時間がかかることが予想されます。
-
-I'm currently in the process of revising the code,
-
-but it will probably take quite some time as I will probably have to rewrite most of the code.
-
-## TODO
-
-最新バージョンへの対応
-
-Support for the latest version
-
-READMEの多言語化対応
-
-Multilingualization of README
-
-アプリの多言語化対応
-
-Multilingual support for apps
-
 ## これは何？
 
-このアプリケーションはブルーアーカイブのアセットファイルを元のファイル名に直して簡単に開けるようにするアプリです。
+一言でいえばブルアカのMediaPatchをすべて元の形式に戻すやつです
 
-![image](https://user-images.githubusercontent.com/90076182/236634052-e67ddf41-4579-406e-8aed-227f8c6ca787.png)
+元のMediaPatchフォルダはただの数字のファイルの羅列ですがこれを誰でも見れる形式に変えてくれます
 
-↑もともとアセットファイルはこんなになってますが、このアプリを使えば
+![image](https://github.com/Endergreen12/Blue-Archive-Assets-Converter/assets/90076182/29bef232-7d8a-4c07-8d57-fc3aeeda37b6)
 
-![image](https://user-images.githubusercontent.com/90076182/236634177-7c276bfb-4b16-462c-8302-f9d5b070a001.png)
+## 重要
 
-![image](https://user-images.githubusercontent.com/90076182/236634255-9245c0d1-6a93-402a-8e73-623246729731.png)
+このツールがMediaPatchのファイルを扱うにはMediaPatchフォルダーの中にあるMediaCatalog.bytesが必要なのですが、
 
-こんな感じで簡単に聞いたり見たりできるようになります
+どうやらゲームはデータのイニシャライズが終わった後そのファイルを消してしまうようです
 
-## 使い方
+MediaCatalog.bytesを残すには、ゲームのイニシャライズ中にゲームを終了する必要があります
 
-起動すればコンソールに指示が出るのでそれに従ってください
+下の写真の画面の時にゲームを終了するとMediaPatchの中にMediaCatalog.bytesがあるはずです
 
-これは自分用に作ったので説明が雑なところもあるかもです
+![Screenshot_20240505-225155](https://github.com/Endergreen12/Blue-Archive-Assets-Converter/assets/90076182/c08a88f7-9808-4df1-a138-95bf8639afd8)
 
-もし起動しない場合はランタイムが入ってないかもです
+## お知らせ
 
-ちなみに"Unwelcome School"は"Audio\BGM\Theme_07.ogg"です
+コードを一から書き直しました！！！
+
+詳しくはリリースを見てください
