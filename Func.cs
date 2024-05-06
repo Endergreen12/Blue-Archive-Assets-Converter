@@ -177,11 +177,11 @@ namespace Blue_Archive_Assets_Converter
                     switch (language)
                     {
                         case Language.Japanese:
-                            locString = "完了しました" + newLineStr + "{0}フォルダはこのプログラムが実行されたフォルダにあるはずです";
+                            locString = "完了しました" + newLineStr + "{0}フォルダの場所は \"{1}\" です";
                             break;
 
                         default:
-                            locString = "Done" + newLineStr + "The {0} folder should be in the folder where this program was run";
+                            locString = "Done" + newLineStr + "The location of the {0} folder is \"{1}\"";
                             break;
                     }
                     break;

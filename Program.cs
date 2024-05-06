@@ -101,5 +101,5 @@ foreach (KeyValuePair<string, Media> catalog in mediaCatalog.Table)
 }
 
 breakLine(2);
-Console.WriteLine(getLocalizedString(Message.Done, language), outputFolderName);
+Console.WriteLine(getLocalizedString(Message.Done, language), outputFolderName, Directory.GetCurrentDirectory());
 pressAnyKey(language);
