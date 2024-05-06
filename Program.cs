@@ -80,10 +80,15 @@ breakLine();
 
 Console.WriteLine(getLocalizedString(Message.MediaCatalogLoading, language));
 
-// Load MediaCatalog | MediaCatalogを読み込む
+
+
+/*                    Load MediaCatalog | MediaCatalogを読み込む                       */
 byte[] catalogBin = File.ReadAllBytes(catalogBinPath);
 MediaCatalog mediaCatalog = MemoryPackSerializer.Deserialize<MediaCatalog>(catalogBin);
 
+
+
+/*                    Create output directory | outputディレクトリの作成                       */
 string outputFolderName = "output";
 if(!Directory.Exists(outputFolderName))
 {
@@ -92,6 +97,9 @@ if(!Directory.Exists(outputFolderName))
 }
 Directory.SetCurrentDirectory(outputFolderName);
 
+
+
+/*                    Copy files | ファイルのコピー                       */
 // Copy the files using the information in each stored Media
 // 格納されたそれぞれのMediaの情報を使いファイルをコピーする
 Console.WriteLine(getLocalizedString(Message.CopyStart, language), outputFolderName);
@@ -101,25 +109,29 @@ foreach (KeyValuePair<string, Media> catalog in mediaCatalog.Table)
 {
     Media media = catalog.Value;
 
-    if(specifiedMediaType != MediaType.None && media.MediaType != specifiedMediaType)
+    // Discriminate if MediaType is specified | MediaTypeが指定されている場合は判別する
+    if (specifiedMediaType != MediaType.None && media.MediaType != specifiedMediaType)
     {
         continue;
     }
 
-    string[] gotFiles = Directory.GetFiles(mediaPatchPath, "*_" + media.Crc.ToString());
 
-    // Since the file name contains Crc, use it to confirm its existence
-    // ファイル名にCrcを含んでいるのでそれを利用して存在を確認する
-    // TODO: Reveal the mysterious UInt64 numbers in front of the Crc | Crcの前についてる謎のUInt64の数字の正体を明かす
-    // This one is a mystery | こいつが謎 -> [652901576978586]_[4235271580] <- This is Crc | これはCrc
-    if (gotFiles.Length > 0)
+
+    /*                  Copy files | ファイルをコピー                       */
+    // Since the file name contains Crc, use it to confirm its existence        // TODO: Reveal the mysterious UInt64 numbers in front of the Crc | Crcの前についてる謎のUInt64の数字の正体を明かす
+    // ファイル名にCrcを含んでいるのでそれを利用して存在を確認する              // This one is a mystery | こいつが謎 -> [652901576978586]_[4235271580] <- This is Crc | これはCrc
+    string[] srcFileArray = Directory.GetFiles(mediaPatchPath, "*_" + media.Crc.ToString());
+    if (srcFileArray.Length > 0)
     {
         // Create directory | ディレクトリを作成                                        // Example | 例 (Path: "Audio/VOC_JP/JP_Arona/Arona_Work_Sleep_In_2.ogg"):
         string[] newDirectoryArray = media.Path.Split('/');                             // ["Audio", "VOC_JP", "JP_Arona", "Arona_Work_Sleep_In_2.ogg"]
         Directory.CreateDirectory(String.Join("\\", newDirectoryArray.SkipLast(1)));    // "Audio\\VOC_JP\\JP_Arona"
-        File.Copy(gotFiles[0], media.Path, true);                                       // 17395964499024812656_2952918613 will be copied to output\Audio\VOC_JP\JP_Arona\Arona_Work_Sleep_In_2.ogg
+        File.Copy(srcFileArray[0], media.Path, true);                                   // 17395964499024812656_2952918613 -> output\Audio\VOC_JP\JP_Arona\Arona_Work_Sleep_In_2.ogg
     }
 
+
+
+    /*                    Logging | ログ                        */
     // Log output on the same line, but the previous output is still there, so delete the previous output
     // 同じ行でログを出力するが前の出力が残っているので前の出力を消す
     Console.SetCursorPosition(curPos.Left, curPos.Top);
@@ -127,9 +139,9 @@ foreach (KeyValuePair<string, Media> catalog in mediaCatalog.Table)
         Console.Write(new string(' ', lastLogLength));
     Console.SetCursorPosition(curPos.Left, curPos.Top);
 
-    if(gotFiles.Length > 0)
+    if(srcFileArray.Length > 0)
     {
-        string log = gotFiles[0] + " -> " + media.Path;
+        string log = srcFileArray[0] + " -> " + media.Path;
         lastLogLength = log.Length;
         Console.Write(log);
     } else
