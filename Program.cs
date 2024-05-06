@@ -75,6 +75,7 @@ foreach (KeyValuePair<string, Media> catalog in mediaCatalog.Table)
 {
     Media media = catalog.Value;
     string[] gotFiles = Directory.GetFiles(mediaPatchPath, "*_" + media.Crc.ToString());
+
     // Since the file name contains Crc, use it to confirm its existence
     // ファイル名にCrcを含んでいるのでそれを利用して存在を確認する
     // TODO: Reveal the mysterious UInt64 numbers in front of the Crc | Crcの前についてる謎のUInt64の数字の正体を明かす
@@ -85,17 +86,27 @@ foreach (KeyValuePair<string, Media> catalog in mediaCatalog.Table)
         string[] newDirectoryArray = media.Path.Split('/');                             // ["Audio", "VOC_JP", "JP_Arona", "Arona_Work_Sleep_In_2.ogg"]
         Directory.CreateDirectory(String.Join("\\", newDirectoryArray.SkipLast(1)));    // "Audio\\VOC_JP\\JP_Arona"
         File.Copy(gotFiles[0], media.Path, true);                                       // 17395964499024812656_2952918613 will be copied to output\Audio\VOC_JP\JP_Arona\Arona_Work_Sleep_In_2.ogg
+    }
 
-        // Log output on the same line, but it covers the previous output, so delete the previous output
-        // 同じ行でログを出力するが前の出力にかぶさるので前の出力を消す
+    // Log output on the same line, but the previous output is still there, so delete the previous output
+    // 同じ行でログを出力するが前の出力が残っているので前の出力を消す
+    Console.SetCursorPosition(curPos.Left, curPos.Top);
+    if (lastLogLength > 0)
+        Console.Write(new string(' ', lastLogLength));
+    Console.SetCursorPosition(curPos.Left, curPos.Top);
+
+    if(gotFiles.Length > 0)
+    {
         string log = gotFiles[0] + " -> " + media.Path;
-
-        if(lastLogLength > 0)
-            Console.Write(new string(' ', lastLogLength));
-
         lastLogLength = log.Length;
-        Console.SetCursorPosition(curPos.Left, curPos.Top);
         Console.Write(log);
+    } else
+    {
+        Console.WriteLine(getLocalizedString(Message.SourceFileNotFound, language), media.Path, "*_" + media.Crc.ToString());
+        // Re-set curPos with a new line to avoid erasing the error
+        // エラーを消さないようにするため改行してcurPosを再設定する
+        curPos = Console.GetCursorPosition();
+        lastLogLength = 0;
     }
 }
 

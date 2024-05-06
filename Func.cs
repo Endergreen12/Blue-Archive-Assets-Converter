@@ -18,6 +18,7 @@ namespace Blue_Archive_Assets_Converter
             MediaCatalogLoading,
             DirCreated,
             CopyStart,
+            SourceFileNotFound,
             Done
         }
 
@@ -169,6 +170,19 @@ namespace Blue_Archive_Assets_Converter
 
                         default:
                             locString = "output folder is created in the current directory" + newLineStr + "(Files will be copied to the {0} folder)";
+                            break;
+                    }
+                    break;
+
+                case Message.SourceFileNotFound:
+                    switch (language)
+                    {
+                        case Language.Japanese:
+                            locString = "{0}のソースファイル{1}が見つかりませんでした";
+                            break;
+
+                        default:
+                            locString = "Source file {1} for {0} could not be found";
                             break;
                     }
                     break;
