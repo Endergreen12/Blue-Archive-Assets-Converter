@@ -79,7 +79,7 @@ foreach (KeyValuePair<string, Media> catalog in mediaCatalog.Table)
     // Since the file name contains Crc, use it to confirm its existence
     // ファイル名にCrcを含んでいるのでそれを利用して存在を確認する
     // TODO: Reveal the mysterious UInt64 numbers in front of the Crc | Crcの前についてる謎のUInt64の数字の正体を明かす
-    // This | こいつ -> 652901576978586_4235271580 <- This is Crc | これはCrc
+    // This one is a mystery | こいつが謎 -> [652901576978586]_[4235271580] <- This is Crc | これはCrc
     if (gotFiles.Length > 0)
     {
         // Create directory | ディレクトリを作成
