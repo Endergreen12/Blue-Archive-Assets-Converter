@@ -55,6 +55,7 @@ namespace Blue_Archive_Assets_Converter
         public static string getLocalizedString(Message message, Language language) // TODO: Find a better way to localize | よりよいローカライズの方法を見つける
         {                                                                           // default in switch means English | switchのdefaultは英語
             string locString = "";
+            string newLineStr = Environment.NewLine;
             switch(message)
             {
                 case Message.PressAnyKeyToExit:
@@ -74,11 +75,11 @@ namespace Blue_Archive_Assets_Converter
                     switch(language)
                     {
                         case Language.Japanese:
-                            locString = "MediaPatchフォルダーのパスを入力してください\n(例:D:\\BlueArchive\\com.YostarJP.BlueArchive\\files\\MediaPatch)";
+                            locString = "MediaPatchフォルダーのパスを入力してください" + newLineStr + "(例:D:\\BlueArchive\\com.YostarJP.BlueArchive\\files\\MediaPatch)";
                             break;
 
                         default:
-                            locString = "Enter the path to the MediaPatch folder\n(e.g., D:\\BlueArchive\\com.YostarJP.BlueArchive\\files\\MediaPatch)";
+                            locString = "Enter the path to the MediaPatch folder" + newLineStr + "(e.g., D:\\BlueArchive\\com.YostarJP.BlueArchive\\files\\MediaPatch)";
                             break;
                     }
                     break;
@@ -100,11 +101,11 @@ namespace Blue_Archive_Assets_Converter
                     switch (language)
                     {
                         case Language.Japanese:
-                            locString = "{0}が指定されたフォルダの中に見つかりませんでした\n利用可能な{0}をフルパスで(ファイル名も含めて)入力してください\n(例:D:\\MediaCatalog\\MediaCatalog(1.44.278134).bytes)";
+                            locString = "{0}が指定されたフォルダの中に見つかりませんでした" + newLineStr + "利用可能な{0}をフルパスで(ファイル名も含めて)入力してください" + newLineStr + "(例:D:\\MediaCatalog\\MediaCatalog(1.44.278134).bytes)";
                             break;
 
                         default:
-                            locString = "{0} was not found in the specified folder\nPlease specify the full path (include file name) to {0} manually available\n(e.g., D:\\MediaCatalog\\MediaCatalog(1.44.278134).bytes)";
+                            locString = "{0} was not found in the specified folder" + newLineStr + "Please specify the full path (include file name) to {0} manually available" + newLineStr + "(e.g., D:\\MediaCatalog\\MediaCatalog(1.44.278134).bytes)";
                             break;
                     }
                     break;
@@ -152,11 +153,11 @@ namespace Blue_Archive_Assets_Converter
                     switch (language)
                     {
                         case Language.Japanese:
-                            locString = "ファイルのコピーを開始します\n({0}フォルダにコピーされます)";
+                            locString = "ファイルのコピーを開始します" + newLineStr + "({0}フォルダにコピーされます)";
                             break;
 
                         default:
-                            locString = "output folder is created in the current directory\n(Files will be copied to the {0} folder)";
+                            locString = "output folder is created in the current directory" + newLineStr + "(Files will be copied to the {0} folder)";
                             break;
                     }
                     break;
@@ -165,11 +166,11 @@ namespace Blue_Archive_Assets_Converter
                     switch (language)
                     {
                         case Language.Japanese:
-                            locString = "完了しました\n{0}フォルダはこのプログラムが実行されたフォルダにあるはずです";
+                            locString = "完了しました" + newLineStr + "{0}フォルダはこのプログラムが実行されたフォルダにあるはずです";
                             break;
 
                         default:
-                            locString = "Done\nThe {0} folder should be in the folder where this program was run";
+                            locString = "Done" + newLineStr + "The {0} folder should be in the folder where this program was run";
                             break;
                     }
                     break;
