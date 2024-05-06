@@ -82,10 +82,10 @@ foreach (KeyValuePair<string, Media> catalog in mediaCatalog.Table)
     // This one is a mystery | こいつが謎 -> [652901576978586]_[4235271580] <- This is Crc | これはCrc
     if (gotFiles.Length > 0)
     {
-        // Create directory | ディレクトリを作成
-        string[] newDirectoryArray = media.Path.Split('/');
-        Directory.CreateDirectory(String.Join("\\", newDirectoryArray.SkipLast(1)));
-        File.Copy(gotFiles[0], media.Path, true);
+        // Create directory | ディレクトリを作成                                        // Example | 例 (Path: "Audio/VOC_JP/JP_Arona/Arona_Work_Sleep_In_2.ogg"):
+        string[] newDirectoryArray = media.Path.Split('/');                             // ["Audio", "VOC_JP", "JP_Arona", "Arona_Work_Sleep_In_2.ogg"]
+        Directory.CreateDirectory(String.Join("\\", newDirectoryArray.SkipLast(1)));    // "Audio\\VOC_JP\\JP_Arona"
+        File.Copy(gotFiles[0], media.Path, true);                                       // 17395964499024812656_2952918613 will be copied to output\Audio\VOC_JP\JP_Arona\Arona_Work_Sleep_In_2.ogg
 
         // Log output on the same line, but it covers the previous output, so delete the previous output
         // 同じ行でログを出力するが前の出力にかぶさるので前の出力を消す
