@@ -2,6 +2,10 @@
   "profiles": {
     "Blue-Archive-Assets-Converter": {
       "commandName": "Project"
+    },
+    "WSL": {
+      "commandName": "WSL2",
+      "distributionName": ""
     }
   }
 }

@@ -124,10 +124,10 @@ foreach (KeyValuePair<string, Media> catalog in mediaCatalog.Table)
     string[] srcFileArray = Directory.GetFiles(mediaPatchPath, "*_" + media.Crc.ToString());
     if (srcFileArray.Length > 0)
     {
-        // Create directory | ディレクトリを作成                                        // Example | 例 (Path: "Audio/VOC_JP/JP_Arona/Arona_Work_Sleep_In_2.ogg"):
-        string[] newDirectoryArray = media.Path.Split('/');                             // ["Audio", "VOC_JP", "JP_Arona", "Arona_Work_Sleep_In_2.ogg"]
-        Directory.CreateDirectory(String.Join("\\", newDirectoryArray.SkipLast(1)));    // "Audio\\VOC_JP\\JP_Arona"
-        File.Copy(srcFileArray[0], media.Path, true);                                   // 17395964499024812656_2952918613 -> output\Audio\VOC_JP\JP_Arona\Arona_Work_Sleep_In_2.ogg
+        // Create directory | ディレクトリを作成                                             // Example | 例 (Path: "Audio/VOC_JP/JP_Arona/Arona_Work_Sleep_In_2.ogg"):
+        string[] newDirectoryArray = media.Path.Split('/');                                  // ["Audio", "VOC_JP", "JP_Arona", "Arona_Work_Sleep_In_2.ogg"]
+        Directory.CreateDirectory(Path.Combine(newDirectoryArray.SkipLast(1).ToArray()));    // "Audio\\VOC_JP\\JP_Arona"
+        File.Copy(srcFileArray[0], media.Path, true);                                        // 17395964499024812656_2952918613 -> output\Audio\VOC_JP\JP_Arona\Arona_Work_Sleep_In_2.ogg
     }
 
 
