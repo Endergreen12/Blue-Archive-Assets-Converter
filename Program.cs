@@ -14,11 +14,15 @@ if (args.Length == 0 || !Enum.TryParse<Language>(args[0], out language)) // Over
     language = getUserLanguage();
 }
 
+
+
 /*                                                                         
                             Preparation | 準備                           
                                                                           */
 
 
+
+/*                    Ask user MediaPatch path | ユーザーにMediaPathのパスを聞く                     */
 Console.WriteLine(getLocalizedString(Message.EnterFolderPath, language));
 mediaPatchPath = Console.ReadLine();
 
@@ -28,9 +32,11 @@ if(!Directory.Exists(mediaPatchPath)) // Exit program if directory does not exis
     Console.WriteLine(getLocalizedString(Message.FolderDoesNotExist, language));
     pressAnyKey(language);
 }
-
 breakLine();
 
+
+
+/*                    Ask user MediaCatalog path | ユーザーにMediaCatalogのパスを聞く                        */
 string mediaCatalogBinName = "MediaCatalog.bytes";
 string catalogBinPath = Path.Combine(mediaPatchPath, mediaCatalogBinName);
 if(!File.Exists(catalogBinPath)) // If MediaCatalog.bytes is not in the specified folder, ask the user for the binary path
@@ -47,13 +53,29 @@ if(!File.Exists(catalogBinPath)) // If MediaCatalog.bytes is not in the specifie
 
     catalogBinPath = specifiedBinPath;
 }
-
 breakLine();
+
+
+
+/*                    Ask the user if they wants to specify the MediaType | ユーザーにMediaTypeを指定するか聞く                        */
+MediaType specifiedMediaType = MediaType.None;
+string userSpecifiedMediaType = "";
+Console.WriteLine(getLocalizedString(Message.SpecifyMediaType, language));
+Console.WriteLine(String.Join(Environment.NewLine, Enum.GetNames<MediaType>())); // List of MediaType | MediaTypeの一覧
+userSpecifiedMediaType = Console.ReadLine();
+if(userSpecifiedMediaType != "" && !Enum.TryParse<MediaType>(userSpecifiedMediaType, out specifiedMediaType)) // Failed to parse MediaType | MediaTypeのParseに失敗
+{
+    Console.WriteLine(getLocalizedString(Message.FailedToParseMediaType, language));
+    pressAnyKey(language);
+}
+breakLine();
+
 
 
 /*                                                                         
                             Loading | ローディング                           
                                                                           */
+
 
 
 Console.WriteLine(getLocalizedString(Message.MediaCatalogLoading, language));
@@ -78,6 +100,12 @@ var lastLogLength = 0;
 foreach (KeyValuePair<string, Media> catalog in mediaCatalog.Table)
 {
     Media media = catalog.Value;
+
+    if(specifiedMediaType != MediaType.None && media.MediaType != specifiedMediaType)
+    {
+        continue;
+    }
+
     string[] gotFiles = Directory.GetFiles(mediaPatchPath, "*_" + media.Crc.ToString());
 
     // Since the file name contains Crc, use it to confirm its existence

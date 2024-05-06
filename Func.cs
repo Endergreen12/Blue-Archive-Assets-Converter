@@ -10,11 +10,16 @@ namespace Blue_Archive_Assets_Converter
     {
         public enum Message
         {
+            // Preparation
             PressAnyKeyToExit,
             EnterFolderPath,
             FolderDoesNotExist,
             SpecifyBinary,
             BinaryNotFound,
+            SpecifyMediaType,
+            FailedToParseMediaType,
+
+            // Loading
             MediaCatalogLoading,
             DirCreated,
             CopyStart,
@@ -70,6 +75,7 @@ namespace Blue_Archive_Assets_Converter
             string newLineStr = Environment.NewLine;
             switch(message)
             {
+                // Preparation
                 case Message.PressAnyKeyToExit:
                     switch (language)
                     {
@@ -135,6 +141,33 @@ namespace Blue_Archive_Assets_Converter
                     }
                     break;
 
+                case Message.SpecifyMediaType:
+                    switch (language)
+                    {
+                        case Language.Japanese:
+                            locString = "もしコピーするMediaTypeを指定したい場合は入力してください。ない場合は空欄にしてください" + newLineStr + "(例: Audio)" + newLineStr + "利用可能なMediaType一覧:";
+                            break;
+
+                        default:
+                            locString = "If you want to specify the MediaType to be copied, please enter it. If not, please leave it blank" + newLineStr + "(e.g., Audio)" + newLineStr + "List of available MediaTypes:";
+                            break;
+                    }
+                    break;
+
+                case Message.FailedToParseMediaType:
+                    switch (language)
+                    {
+                        case Language.Japanese:
+                            locString = "MediaTypeのParseに失敗しました。上の一覧に含まれているものを入力してください";
+                            break;
+
+                        default:
+                            locString = "Parse of MediaType failed. Please enter the one included in the list above";
+                            break;
+                    }
+                    break;
+
+                // Loading
                 case Message.MediaCatalogLoading:
                     switch (language)
                     {
