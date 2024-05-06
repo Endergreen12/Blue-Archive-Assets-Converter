@@ -7,8 +7,12 @@ Console.WriteLine("Blue Archive Assets Converter v{0} | Endergreen12", Assembly.
 breakLine();
 
 string mediaPatchPath = "";
-Language language = getUserLanguage();
+Language language;
 
+if (args.Length == 0 || !Enum.TryParse<Language>(args[0], out language)) // Override language | 言語をオーバーライド
+{
+    language = getUserLanguage();
+}
 
 /*                                                                         
                             Preparation | 準備                           
