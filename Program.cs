@@ -16,8 +16,7 @@ Language language = getUserLanguage();
 
 
 Console.WriteLine(getLocalizedString(Message.EnterFolderPath, language));
-string enteredPath = Console.ReadLine();
-mediaPatchPath = enteredPath;
+mediaPatchPath = Console.ReadLine();
 
 mediaPatchPath = mediaPatchPath.Replace("\"", ""); // Remove double quatation from path | パスからダブルクォーテーションを削除する
 if(!Directory.Exists(mediaPatchPath)) // Exit program if directory does not exist | ディレクトリが存在しなかったらプログラムを終了する
