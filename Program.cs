@@ -2,13 +2,14 @@
 using static Blue_Archive_Assets_Converter.Func;
 using MemoryPack;
 using System.Reflection;
+using System.Reflection.Metadata;
+using System.Text.Json;
 
 Console.WriteLine("Blue Archive Assets Converter v{0} | Endergreen12", Assembly.GetExecutingAssembly().GetName().Version);
 breakLine();
 
 string mediaPatchPath = "";
 Language language;
-
 if (args.Length == 0 || !Enum.TryParse<Language>(args[0], out language)) // Override language | 言語をオーバーライド
 {
     language = getUserLanguage();
@@ -63,7 +64,7 @@ string userSpecifiedMediaType = "";
 Console.WriteLine(getLocalizedString(Message.SpecifyMediaType, language));
 Console.WriteLine(String.Join(Environment.NewLine, Enum.GetNames<MediaType>())); // List of MediaType | MediaTypeの一覧
 userSpecifiedMediaType = Console.ReadLine();
-if(userSpecifiedMediaType != "" && !Enum.TryParse<MediaType>(userSpecifiedMediaType, out specifiedMediaType)) // Failed to parse MediaType | MediaTypeのParseに失敗
+if(userSpecifiedMediaType != "" && !Enum.TryParse(userSpecifiedMediaType, out specifiedMediaType)) // Failed to parse MediaType | MediaTypeのParseに失敗
 {
     Console.WriteLine(getLocalizedString(Message.FailedToParseMediaType, language));
     pressAnyKey(language);
@@ -73,7 +74,7 @@ breakLine();
 
 
 /*                                                                         
-                            Loading | ローディング                           
+                    Loading, Copying | ローディング、コピー
                                                                           */
 
 
@@ -117,7 +118,7 @@ foreach (KeyValuePair<string, Media> catalog in mediaCatalog.Table)
 
 
 
-    /*                  Copy files | ファイルをコピー                       */
+    /*                  Copy source files to output folder | ソースファイルをoutputフォルダにコピー                       */
     // Since the file name contains Crc, use it to confirm its existence        // TODO: Reveal the mysterious UInt64 numbers in front of the Crc | Crcの前についてる謎のUInt64の数字の正体を明かす
     // ファイル名にCrcを含んでいるのでそれを利用して存在を確認する              // This one is a mystery | こいつが謎 -> [652901576978586]_[4235271580] <- This is Crc | これはCrc
     string[] srcFileArray = Directory.GetFiles(mediaPatchPath, "*_" + media.Crc.ToString());
@@ -139,6 +140,7 @@ foreach (KeyValuePair<string, Media> catalog in mediaCatalog.Table)
         Console.Write(new string(' ', lastLogLength));
     Console.SetCursorPosition(curPos.Left, curPos.Top);
 
+    // Write log | ログを出力
     if(srcFileArray.Length > 0)
     {
         string log = srcFileArray[0] + " -> " + media.Path;
@@ -153,7 +155,23 @@ foreach (KeyValuePair<string, Media> catalog in mediaCatalog.Table)
         lastLogLength = 0;
     }
 }
+breakLine();
 
+
+
+/*                  Export MediaCatalog as json | json形式でのMediaCatalogのエクスポート                       */
+Console.WriteLine(getLocalizedString(Message.AskExportJson, language));
+if(Console.ReadLine().Equals("y", StringComparison.OrdinalIgnoreCase))
+{
+    string catalogJsonName = "MediaCatalog.json";
+    JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions { WriteIndented = true };
+    File.WriteAllText(catalogJsonName, JsonSerializer.Serialize(mediaCatalog, jsonSerializerOptions));
+    breakLine();
+    Console.WriteLine(getLocalizedString(Message.JsonExported, language), catalogJsonName);
+}
 breakLine(2);
+
+
+
 Console.WriteLine(getLocalizedString(Message.Done, language), outputFolderName, Directory.GetCurrentDirectory());
 pressAnyKey(language);

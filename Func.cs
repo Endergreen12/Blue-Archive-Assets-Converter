@@ -19,11 +19,13 @@ namespace Blue_Archive_Assets_Converter
             SpecifyMediaType,
             FailedToParseMediaType,
 
-            // Loading
+            // Loading, Copying
             MediaCatalogLoading,
             DirCreated,
             CopyStart,
             SourceFileNotFound,
+            AskExportJson,
+            JsonExported,
             Done
         }
 
@@ -216,6 +218,32 @@ namespace Blue_Archive_Assets_Converter
 
                         default:
                             locString = "Source file {1} for {0} could not be found";
+                            break;
+                    }
+                    break;
+
+                case Message.AskExportJson:
+                    switch (language)
+                    {
+                        case Language.Japanese:
+                            locString = "MediaCatalogをJson形式でエクスポートすることができます。エクスポートしますか？(Y/N)";
+                            break;
+
+                        default:
+                            locString = "You can export MediaCatalog in Json format. Do you want to export? (Y/N)";
+                            break;
+                    }
+                    break;
+
+                case Message.JsonExported:
+                    switch (language)
+                    {
+                        case Language.Japanese:
+                            locString = "{0}をエクスポートしました";
+                            break;
+
+                        default:
+                            locString = "Exported {0}";
                             break;
                     }
                     break;
