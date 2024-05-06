@@ -4,7 +4,7 @@ using MemoryPack;
 using System.Reflection;
 
 Console.WriteLine("Blue Archive Assets Converter v{0} | Endergreen12", Assembly.GetExecutingAssembly().GetName().Version);
-Console.WriteLine();
+breakLine();
 
 string mediaPatchPath = "";
 Language language = getUserLanguage();
@@ -26,7 +26,7 @@ if(!Directory.Exists(mediaPatchPath)) // Exit program if directory does not exis
     pressAnyKey(language);
 }
 
-Console.WriteLine();
+breakLine();
 
 string mediaCatalogBinName = "MediaCatalog.bytes";
 string catalogBinPath = Path.Combine(mediaPatchPath, mediaCatalogBinName);
@@ -45,7 +45,7 @@ if(!File.Exists(catalogBinPath)) // If MediaCatalog.bytes is not in the specifie
     catalogBinPath = specifiedBinPath;
 }
 
-Console.WriteLine();
+breakLine();
 
 
 /*                                                                         
@@ -100,7 +100,6 @@ foreach (KeyValuePair<string, Media> catalog in mediaCatalog.Table)
     }
 }
 
-Console.WriteLine();
-Console.WriteLine();
+breakLine(2);
 Console.WriteLine(getLocalizedString(Message.Done, language), outputFolderName);
 pressAnyKey(language);

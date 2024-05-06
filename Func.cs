@@ -34,6 +34,17 @@ namespace Blue_Archive_Assets_Converter
             Environment.Exit(0);
         }
 
+        public static void breakLine(int count = 1)
+        {
+            if (count == 1)
+            {
+                Console.WriteLine();
+            } else {
+                // Thanks https://dobon.net/vb/dotnet/string/repeat.html
+                Console.Write(new string('*', count).Replace("*", Environment.NewLine));
+            }
+        }
+
         // Localization | ローカライゼーション
 
         public static Language getUserLanguage()
