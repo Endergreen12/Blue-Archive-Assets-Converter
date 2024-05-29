@@ -53,14 +53,10 @@ namespace Blue_Archive_Assets_Converter
             }
         }
 
-        // Localization | ローカライゼーション
-
         public static Language getUserLanguage()
         {
             string country = System.Globalization.CultureInfo.CurrentCulture.Name;
-            Language language = Language.English; // Default language is English | デフォルトの言語は英語
-            // Use switch statements to account for the possibility of adding languages later
-            // 後から言語を追加することも考慮してswitchステートメントを使う
+            Language language = Language.English;
             switch (country)
             {
                 case "ja-JP":
@@ -71,8 +67,8 @@ namespace Blue_Archive_Assets_Converter
             return language;
         }
 
-        public static string getLocalizedString(Message message, Language language) // TODO: Find a better way to localize | よりよいローカライズの方法を見つける
-        {                                                                           // default in switch means English | switchのdefaultは英語
+        public static string getLocalizedString(Message message, Language language)
+        {
             string locString = "";
             string newLineStr = Environment.NewLine;
             switch(message)
