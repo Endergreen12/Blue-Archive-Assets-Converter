@@ -16,11 +16,9 @@
 
 どうやらゲームはデータのイニシャライズが終わった後そのファイルを消してしまうようです
 
-MediaCatalog.bytesを残すには、ゲームのイニシャライズ中にゲームを終了する必要があります
+MediaCatalog.bytesを残すには、ゲームを起動した後の"Initialize Media Catalog"が99%らへんの時にゲームを終了する必要があります
 
-下の写真の画面の時にゲームを終了するとMediaPatchの中にMediaCatalog.bytesがあるはずです
-
-![Screenshot_20240505-225155](https://github.com/Endergreen12/Blue-Archive-Assets-Converter/assets/90076182/c08a88f7-9808-4df1-a138-95bf8639afd8)
+![image](https://github.com/Endergreen12/Blue-Archive-Assets-Converter/assets/90076182/f0ae1f30-72de-4cc9-bfbd-8fa47df6f62e)
 
 ## お知らせ
 
