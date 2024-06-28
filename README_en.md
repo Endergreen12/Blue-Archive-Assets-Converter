@@ -16,11 +16,9 @@ The tool needs MediaCatalog.bytes in MediaPatch folder to handle MediaPatch file
 
 but apparently the game deletes that file after initializing the data
 
-To leave MediaCatalog.bytes, you must exit the game during game initialization
+To keep the MediaCatalog.bytes, you need to quit the game when the "Initialize Media Catalog" is around 99% after starting the game
 
-If you exit the game when you are at the screen in the picture below, you should find MediaCatalog.bytes in MediaPatch folder
-
-![Screenshot_20240505-225155](https://github.com/Endergreen12/Blue-Archive-Assets-Converter/assets/90076182/c08a88f7-9808-4df1-a138-95bf8639afd8)
+![image](https://github.com/Endergreen12/Blue-Archive-Assets-Converter/assets/90076182/f0ae1f30-72de-4cc9-bfbd-8fa47df6f62e)
 
 ## Notice
 
