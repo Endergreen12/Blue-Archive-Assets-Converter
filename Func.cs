@@ -24,8 +24,7 @@ namespace Blue_Archive_Assets_Converter
             DirCreated,
             CopyStart,
             SourceFileNotFound,
-            AskExportJson,
-            JsonExported,
+            FileExist,
             Done
         }
 
@@ -218,28 +217,15 @@ namespace Blue_Archive_Assets_Converter
                     }
                     break;
 
-                case Message.AskExportJson:
+                case Message.FileExist:
                     switch (language)
                     {
                         case Language.Japanese:
-                            locString = "MediaCatalogをJson形式でエクスポートすることができます。エクスポートしますか？(Y/N)";
+                            locString = "{0}はすでにコピーされていたため、スキップします";
                             break;
 
                         default:
-                            locString = "You can export MediaCatalog in Json format. Do you want to export? (Y/N)";
-                            break;
-                    }
-                    break;
-
-                case Message.JsonExported:
-                    switch (language)
-                    {
-                        case Language.Japanese:
-                            locString = "{0}をエクスポートしました";
-                            break;
-
-                        default:
-                            locString = "Exported {0}";
+                            locString = "Skip {0} because it was already copied";
                             break;
                     }
                     break;

@@ -1,9 +1,8 @@
 ﻿using Blue_Archive_Assets_Converter;
-using static Blue_Archive_Assets_Converter.Func;
 using MemoryPack;
 using System.Reflection;
-using System.Reflection.Metadata;
-using System.Text.Json;
+using System.Security.Cryptography;
+using static Blue_Archive_Assets_Converter.Func;
 
 Console.WriteLine("Blue Archive Assets Converter v{0} | Endergreen12", Assembly.GetExecutingAssembly().GetName().Version);
 breakLine();
@@ -81,42 +80,46 @@ foreach (KeyValuePair<string, Media> catalog in mediaCatalog.Table)
     }
 
     string[] srcFileArray = Directory.GetFiles(mediaPatchPath, "*_" + media.Crc.ToString());
+    bool isSame = false;
     if (srcFileArray.Length > 0)
     {
-        string[] newDirectoryArray = media.Path.Split('/');
-        Directory.CreateDirectory(Path.Combine(newDirectoryArray.SkipLast(1).ToArray()));
-        File.Copy(srcFileArray[0], media.Path, true);
+        if(File.Exists(media.Path))
+        {
+            byte[] srcFileHash = MD5.Create().ComputeHash(File.ReadAllBytes(srcFileArray[0]));
+            byte[] existFileHash = MD5.Create().ComputeHash(File.ReadAllBytes(media.Path));
+            isSame = true;
+            for(int i = 0; i < srcFileHash.Length; i++)
+            {
+                if (srcFileHash[i] != existFileHash[i])
+                    isSame = false;
+            }
+        }
+        if (!isSame)
+        {
+            string[] newDirectoryArray = media.Path.Split('/');
+            Directory.CreateDirectory(Path.Combine(newDirectoryArray.SkipLast(1).ToArray()));
+            File.Copy(srcFileArray[0], media.Path, true);
+        }
     }
 
     Console.SetCursorPosition(curPos.Left, curPos.Top);
     if (lastLogLength > 0)
-        Console.Write(new string(' ', lastLogLength));
+        Console.Write(new string(' ', lastLogLength)); // すでに出力されているログを空白で埋めて消去 | Delete log already output with filling with space
     Console.SetCursorPosition(curPos.Left, curPos.Top);
 
-    if(srcFileArray.Length > 0)
+    if(srcFileArray.Length > 0 && !isSame)
     {
         string log = srcFileArray[0] + " -> " + media.Path;
         lastLogLength = log.Length;
         Console.Write(log);
     } else
     {
-        Console.WriteLine(getLocalizedString(Message.SourceFileNotFound, language), media.Path, "*_" + media.Crc.ToString());
+        Console.WriteLine(getLocalizedString(isSame ? Message.FileExist : Message.SourceFileNotFound, language), media.Path, "*_" + media.Crc.ToString());
         curPos = Console.GetCursorPosition();
         lastLogLength = 0;
     }
 }
 breakLine();
-
-Console.WriteLine(getLocalizedString(Message.AskExportJson, language));
-if(Console.ReadLine().Equals("y", StringComparison.OrdinalIgnoreCase))
-{
-    string catalogJsonName = "MediaCatalog.json";
-    JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions { WriteIndented = true };
-    File.WriteAllText(catalogJsonName, JsonSerializer.Serialize(mediaCatalog, jsonSerializerOptions));
-    breakLine();
-    Console.WriteLine(getLocalizedString(Message.JsonExported, language), catalogJsonName);
-}
-breakLine(2);
 
 Console.WriteLine(getLocalizedString(Message.Done, language), outputFolderName, Directory.GetCurrentDirectory());
 pressAnyKey(language);
