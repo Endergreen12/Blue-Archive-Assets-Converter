@@ -94,7 +94,10 @@ foreach (KeyValuePair<string, Media> catalog in mediaCatalog.Table)
             for(int i = 0; i < srcFileHash.Length; i++)
             {
                 if (srcFileHash[i] != existFileHash[i])
+                {
                     isSame = false;
+                    break;
+                }
             }
         }
         if (!isSame)
