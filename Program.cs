@@ -1,5 +1,6 @@
 ﻿using Blue_Archive_Assets_Converter;
 using MemoryPack;
+using System.Diagnostics;
 using System.Reflection;
 using System.Security.Cryptography;
 using static Blue_Archive_Assets_Converter.Func;
@@ -70,6 +71,8 @@ Directory.SetCurrentDirectory(outputFolderName);
 Console.WriteLine(getLocalizedString(Message.CopyStart, language), outputFolderName);
 var curPos = Console.GetCursorPosition();
 var lastLogLength = 0;
+var sw = new Stopwatch();
+sw.Start();
 foreach (KeyValuePair<string, Media> catalog in mediaCatalog.Table)
 {
     Media media = catalog.Value;
@@ -119,7 +122,8 @@ foreach (KeyValuePair<string, Media> catalog in mediaCatalog.Table)
         lastLogLength = 0;
     }
 }
-breakLine();
+sw.Stop();
+breakLine(2);
 
-Console.WriteLine(getLocalizedString(Message.Done, language), outputFolderName, Directory.GetCurrentDirectory());
+Console.WriteLine(getLocalizedString(Message.Done, language), outputFolderName, Directory.GetCurrentDirectory(), sw.Elapsed.Minutes, sw.Elapsed.Seconds, sw.ElapsedMilliseconds);
 pressAnyKey(language);

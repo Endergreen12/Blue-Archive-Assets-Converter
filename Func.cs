@@ -234,11 +234,11 @@ namespace Blue_Archive_Assets_Converter
                     switch (language)
                     {
                         case Language.Japanese:
-                            locString = "完了しました" + newLineStr + "{0}フォルダの場所は \"{1}\" です";
+                            locString = "完了しました" + newLineStr + "{0}フォルダの場所は \"{1}\" です" + newLineStr + "完了までにかかった時間: {2}分 {3}秒 ({4}ミリ秒)";
                             break;
 
                         default:
-                            locString = "Done" + newLineStr + "The location of the {0} folder is \"{1}\"";
+                            locString = "Done" + newLineStr + "The location of the {0} folder is \"{1}\"" + newLineStr + "Time taken to complete: {2} minutes {3} seconds ({4} milliseconds)";
                             break;
                     }
                     break;
