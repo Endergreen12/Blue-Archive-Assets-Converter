@@ -8,7 +8,7 @@ using static Blue_Archive_Assets_Converter.Func;
 Console.WriteLine("Blue Archive Assets Converter v{0} | Endergreen12", Assembly.GetExecutingAssembly().GetName().Version);
 breakLine();
 
-string mediaPatchPath = "";
+var mediaPatchPath = "";
 Language language;
 if (args.Length == 0 || !Enum.TryParse<Language>(args[0], out language))
 {
@@ -17,6 +17,13 @@ if (args.Length == 0 || !Enum.TryParse<Language>(args[0], out language))
 
 Console.WriteLine(getLocalizedString(Message.EnterFolderPath, language));
 mediaPatchPath = Console.ReadLine();
+
+if(mediaPatchPath == null)
+{
+    Console.WriteLine("mediaPatchPath is null");
+    Console.ReadLine();
+    Environment.Exit(0);
+}
 
 mediaPatchPath = mediaPatchPath.Replace("\"", ""); // Remove double quatation from path | パスからダブルクォーテーションを削除する
 if(!Directory.Exists(mediaPatchPath))
@@ -31,7 +38,13 @@ string catalogBinPath = Path.Combine(mediaPatchPath, mediaCatalogBinName);
 if(!File.Exists(catalogBinPath))
 {
     Console.WriteLine(getLocalizedString(Message.SpecifyBinary, language), mediaCatalogBinName);
-    string specifiedBinPath = Console.ReadLine();
+    var specifiedBinPath = Console.ReadLine();
+    if(specifiedBinPath == null)
+    {
+        Console.WriteLine("specifiedBinPath is null");
+        Console.ReadLine();
+        Environment.Exit(0);
+    }
     specifiedBinPath = specifiedBinPath.Replace("\"", "");
 
     if (!File.Exists(specifiedBinPath))
@@ -44,8 +57,8 @@ if(!File.Exists(catalogBinPath))
 }
 breakLine();
 
-MediaType specifiedMediaType = MediaType.None;
-string userSpecifiedMediaType = "";
+var specifiedMediaType = MediaType.None;
+var userSpecifiedMediaType = "";
 Console.WriteLine(getLocalizedString(Message.SpecifyMediaType, language));
 Console.WriteLine(String.Join(Environment.NewLine, Enum.GetNames<MediaType>())); // List of MediaType | MediaTypeの一覧
 userSpecifiedMediaType = Console.ReadLine();
@@ -58,7 +71,13 @@ breakLine();
 
 Console.WriteLine(getLocalizedString(Message.MediaCatalogLoading, language));
 byte[] catalogBin = File.ReadAllBytes(catalogBinPath);
-MediaCatalog mediaCatalog = MemoryPackSerializer.Deserialize<MediaCatalog>(catalogBin);
+var mediaCatalog = MemoryPackSerializer.Deserialize<MediaCatalog>(catalogBin);
+if (mediaCatalog == null)
+{
+    Console.WriteLine("mediaCatalog is null");
+    Console.ReadLine();
+    Environment.Exit(0);
+}
 
 string outputFolderName = "output";
 if(!Directory.Exists(outputFolderName))
@@ -73,7 +92,7 @@ var curPos = Console.GetCursorPosition();
 var lastLogLength = 0;
 var sw = new Stopwatch();
 sw.Start();
-foreach (KeyValuePair<string, Media> catalog in mediaCatalog.Table)
+foreach (var catalog in mediaCatalog.Table)
 {
     Media media = catalog.Value;
 
