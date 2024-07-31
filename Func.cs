@@ -66,6 +66,8 @@ namespace Blue_Archive_Assets_Converter
             return language;
         }
 
+        public static string get
+
         public static string getLocalizedString(Message message, Language language)
         {
             string locString = "";
