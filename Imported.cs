@@ -28,4 +28,23 @@ namespace Blue_Archive_Assets_Converter
     {
         public Dictionary<string, Media> Table { get; set; }
     }
+
+    [MemoryPackable]
+    public partial class TableBundle
+    {
+        public string Name { get; set; }
+        public long Size { get; set; }
+        public long Crc { get; set; }
+        public bool isInbuild { get; set; }
+        public bool isChanged { get; set; }
+        public bool IsPrologue { get; set; }
+        public bool IsSplitDownload { get; set; }
+        public List<string> Includes { get; set; }
+    }
+
+    [MemoryPackable]
+    public partial class TableCatalog
+    {
+        public Dictionary<string, TableBundle> Table { get; set; }
+    }
 }
