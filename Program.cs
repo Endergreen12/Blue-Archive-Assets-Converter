@@ -8,53 +8,32 @@ using static Blue_Archive_Assets_Converter.Func;
 Console.WriteLine("Blue Archive Assets Converter v{0} | Endergreen12", Assembly.GetExecutingAssembly().GetName().Version);
 breakLine();
 
-var mediaPatchPath = "";
 Language language;
 if (args.Length == 0 || !Enum.TryParse<Language>(args[0], out language))
 {
     language = getUserLanguage();
 }
 
-Console.WriteLine(getLocalizedString(Message.EnterFolderPath, language));
-mediaPatchPath = Console.ReadLine();
+var targetFolderPath = "";
+Console.WriteLine(getLocalizedString(Message.EnterPath, language), "MediaPatch");
+targetFolderPath = Console.ReadLine();
 
-if(mediaPatchPath == null)
+if(targetFolderPath == null)
 {
-    Console.WriteLine("mediaPatchPath is null");
-    Console.ReadLine();
-    Environment.Exit(0);
+    targetFolderPath = "";
 }
 
-mediaPatchPath = mediaPatchPath.Replace("\"", ""); // Remove double quatation from path | パスからダブルクォーテーションを削除する
-if(!Directory.Exists(mediaPatchPath))
+targetFolderPath = targetFolderPath.Replace("\"", ""); // Remove double quatation from path | パスからダブルクォーテーションを削除する
+if(!Directory.Exists(targetFolderPath))
 {
     Console.WriteLine(getLocalizedString(Message.FolderDoesNotExist, language));
-    pressAnyKey(language);
+    pressAnyKeyToExit(language);
 }
 
-string mediaCatalogBinName = "MediaCatalog.bytes";
-string catalogBinPath = Path.Combine(mediaPatchPath, mediaCatalogBinName);
-if(!File.Exists(catalogBinPath))
-{
-    breakLine();
-    Console.WriteLine(getLocalizedString(Message.SpecifyBinary, language), mediaCatalogBinName);
-    var specifiedBinPath = Console.ReadLine();
-    if(specifiedBinPath == null)
-    {
-        Console.WriteLine("specifiedBinPath is null");
-        Console.ReadLine();
-        Environment.Exit(0);
-    }
-    specifiedBinPath = specifiedBinPath.Replace("\"", "");
+var targetBinPath = "";
+Console.WriteLine(getLocalizedString(Message.SpecifyBinary, language));
+targetBinPath = Console.ReadLine();
 
-    if (!File.Exists(specifiedBinPath))
-    {
-        Console.WriteLine(getLocalizedString(Message.BinaryNotFound, language), mediaCatalogBinName);
-        pressAnyKey(language);
-    }
-
-    catalogBinPath = specifiedBinPath;
-}
 breakLine();
 
 var specifiedMediaType = MediaType.None;
@@ -65,7 +44,7 @@ userSpecifiedMediaType = Console.ReadLine();
 if(userSpecifiedMediaType != "" && !Enum.TryParse(userSpecifiedMediaType, out specifiedMediaType))
 {
     Console.WriteLine(getLocalizedString(Message.FailedToParseMediaType, language));
-    pressAnyKey(language);
+    pressAnyKeyToExit(language);
 }
 
 Console.WriteLine(getLocalizedString(Message.MediaCatalogLoading, language));
@@ -101,7 +80,7 @@ foreach (var catalog in mediaCatalog.Table)
         continue;
     }
 
-    string[] srcFileArray = Directory.GetFiles(mediaPatchPath, "*_" + media.Crc.ToString());
+    string[] srcFileArray = Directory.GetFiles(targetFolderPath, "*_" + media.Crc.ToString());
     bool isSame = false;
     if (srcFileArray.Length > 0)
     {
@@ -153,4 +132,4 @@ sw.Stop();
 breakLine();
 
 Console.WriteLine(getLocalizedString(Message.Done, language), outputFolderName, Directory.GetCurrentDirectory(), sw.Elapsed.Minutes, sw.Elapsed.Seconds, sw.ElapsedMilliseconds);
-pressAnyKey(language);
+pressAnyKeyToExit(language);

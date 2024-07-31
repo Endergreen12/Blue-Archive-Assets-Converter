@@ -10,19 +10,13 @@ namespace Blue_Archive_Assets_Converter
     {
         public enum Message
         {
-            // Preparation
             PressAnyKeyToExit,
-            EnterFolderPath,
-            FolderDoesNotExist,
-            SpecifyBinary,
-            BinaryNotFound,
+            EnterPath,
+            NotFound,
             SpecifyMediaType,
             FailedToParseMediaType,
 
-            // Loading, Copying
-            MediaCatalogLoading,
-            DirCreated,
-            CopyStart,
+            CatalogLoading,
             SourceFileNotFound,
             FileExist,
             Done
@@ -34,7 +28,13 @@ namespace Blue_Archive_Assets_Converter
             Japanese
         }
 
-        public static void pressAnyKey(Language lang)
+        public enum CatalogType
+        {
+            MediaCatalog,
+            TableCatalog
+        }
+
+        public static void pressAnyKeyToExit(Language lang)
         {
             Console.WriteLine(getLocalizedString(Message.PressAnyKeyToExit, lang));
             Console.ReadKey();
@@ -74,7 +74,6 @@ namespace Blue_Archive_Assets_Converter
             string newLineStr = Environment.NewLine;
             switch(message)
             {
-                // Preparation
                 case Message.PressAnyKeyToExit:
                     switch (language)
                     {
@@ -88,54 +87,28 @@ namespace Blue_Archive_Assets_Converter
                     }
                     break;
 
-                case Message.EnterFolderPath:
+                case Message.EnterPath:
                     switch(language)
                     {
                         case Language.Japanese:
-                            locString = "MediaPatchフォルダーのパスを入力してください" + newLineStr + "(例:D:\\BlueArchive\\com.YostarJP.BlueArchive\\files\\MediaPatch)";
+                            locString = "\"{0}\" のパスを入力してください";
                             break;
 
                         default:
-                            locString = "Enter the path to the MediaPatch folder" + newLineStr + "(e.g., D:\\BlueArchive\\com.YostarJP.BlueArchive\\files\\MediaPatch)";
+                            locString = "Enter the path to \"{0}\"";
                             break;
                     }
                     break;
 
-                case Message.FolderDoesNotExist:
+                case Message.NotFound:
                     switch (language)
                     {
                         case Language.Japanese:
-                            locString = "指定されたディレクトリが存在しませんでした";
+                            locString = "\"{0}\" が存在しませんでした";
                             break;
 
                         default:
-                            locString = "The specified directory does not exist";
-                            break;
-                    }
-                    break;
-
-                case Message.SpecifyBinary:
-                    switch (language)
-                    {
-                        case Language.Japanese:
-                            locString = "{0}が指定されたフォルダの中に見つかりませんでした" + newLineStr + "利用可能な{0}をフルパスで(ファイル名も含めて)入力してください" + newLineStr + "(例:D:\\MediaCatalog\\MediaCatalog(1.44.278134).bytes)";
-                            break;
-
-                        default:
-                            locString = "{0} was not found in the specified folder" + newLineStr + "Please specify the full path (include file name) to {0} manually available" + newLineStr + "(e.g., D:\\MediaCatalog\\MediaCatalog(1.44.278134).bytes)";
-                            break;
-                    }
-                    break;
-
-                case Message.BinaryNotFound:
-                    switch (language)
-                    {
-                        case Language.Japanese:
-                            locString = "指定されたファイルが見つかりませんでした";
-                            break;
-
-                        default:
-                            locString = "The specified file could not be found";
+                            locString = "The specified directory \"{0}\" does not exist";
                             break;
                     }
                     break;
@@ -166,42 +139,15 @@ namespace Blue_Archive_Assets_Converter
                     }
                     break;
 
-                // Loading
-                case Message.MediaCatalogLoading:
+                case Message.CatalogLoading:
                     switch (language)
                     {
                         case Language.Japanese:
-                            locString = "MediaCatalogを読み込んでいます...";
+                            locString = "カタログを読み込んでいます...";
                             break;
 
                         default:
-                            locString = "Loading MediaCatalog...";
-                            break;
-                    }
-                    break;
-
-                case Message.DirCreated:
-                    switch (language)
-                    {
-                        case Language.Japanese:
-                            locString = "{0}フォルダをカレントディレクトリに作成しました";
-                            break;
-
-                        default:
-                            locString = "{0} folder is created in the current directory";
-                            break;
-                    }
-                    break;
-
-                case Message.CopyStart:
-                    switch (language)
-                    {
-                        case Language.Japanese:
-                            locString = "ファイルのコピーを開始します" + newLineStr + "({0}フォルダにコピーされます)";
-                            break;
-
-                        default:
-                            locString = "output folder is created in the current directory" + newLineStr + "(Files will be copied to the {0} folder)";
+                            locString = "Loading Catalog...";
                             break;
                     }
                     break;
@@ -223,11 +169,11 @@ namespace Blue_Archive_Assets_Converter
                     switch (language)
                     {
                         case Language.Japanese:
-                            locString = "{0}はすでにコピーされていたため、スキップします";
+                            locString = "{0}はすでに存在していたため、スキップします";
                             break;
 
                         default:
-                            locString = "Skip {0} because it was already copied";
+                            locString = "Skip {0} because it already existed";
                             break;
                     }
                     break;
@@ -236,11 +182,11 @@ namespace Blue_Archive_Assets_Converter
                     switch (language)
                     {
                         case Language.Japanese:
-                            locString = "完了しました" + newLineStr + "{0}フォルダの場所は \"{1}\" です" + newLineStr + "完了までにかかった時間: {2}分 {3}秒 ({4}ミリ秒)";
+                            locString = "完了しました" + newLineStr + "完了までにかかった時間: {2}分 {3}秒 ({4}ミリ秒)";
                             break;
 
                         default:
-                            locString = "Done" + newLineStr + "The location of the {0} folder is \"{1}\"" + newLineStr + "Time taken to complete: {2} minutes {3} seconds ({4} milliseconds)";
+                            locString = "Done" + newLineStr + "Time taken to complete: {2} minutes {3} seconds ({4} milliseconds)";
                             break;
                     }
                     break;
