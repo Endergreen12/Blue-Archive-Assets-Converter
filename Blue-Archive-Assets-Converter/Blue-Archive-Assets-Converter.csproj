@@ -13,4 +13,9 @@
     <PackageReference Include="MemoryPack" Version="1.21.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Dependencies\Blue-Archive-Classes\Blue-Archive-Classes\Blue-Archive-Classes.csproj" />
+    <ProjectReference Include="..\Dependencies\Utils\Utils\Utils.csproj" />
+  </ItemGroup>
+
 </Project>

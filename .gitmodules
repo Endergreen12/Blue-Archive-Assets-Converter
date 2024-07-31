@@ -1,0 +1,12 @@
+[submodule "Utils"]
+	path = Utils
+	url = https://github.com/Endergreen12/Utils.git
+[submodule "Blue-Archive-Classes"]
+	path = Blue-Archive-Classes
+	url = https://github.com/Endergreen12/Blue-Archive-Classes.git
+[submodule "Dependencies/Blue-Archive-Classes"]
+	path = Dependencies/Blue-Archive-Classes
+	url = https://github.com/Endergreen12/Blue-Archive-Classes.git
+[submodule "Dependencies/Utils"]
+	path = Dependencies/Utils
+	url = https://github.com/Endergreen12/Utils.git
