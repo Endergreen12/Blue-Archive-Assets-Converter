@@ -30,9 +30,9 @@ jobs:
     - name: Build for Linux x64
       run: dotnet publish -r linux-x64
     - name: Release to Github
-      run: ls
-      #uses: softprops/action-gh-release@v2
-      #with:
-        #files: |
-          #Release.txt
-          #LICENSE
+      uses: softprops/action-gh-release@v2
+      with:
+        draft: true
+        files: |
+          Blue-Archive-Assets-Converter/bin/Release/net8.0/win-x64/publish/Blue-Archive-Assets-Converter.exe
+          Blue-Archive-Assets-Converter/bin/Release/net8.0/linux-x64/publish/Blue-Archive-Assets-Converter
