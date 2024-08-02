@@ -7,15 +7,15 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <PublishTrimmed>True</PublishTrimmed>
+	<PublishSingleFile>True</PublishSingleFile>
   </PropertyGroup>
 
 	<Choose>
-		<When Condition=" '$(Publish)'=='true' ">
+		<When Condition=" '$(Configuration)'=='Release' ">
 			<PropertyGroup>
 				<DebugSymbols>false</DebugSymbols>
 				<DebugType>None</DebugType>
-				<PublishSingleFile>true</PublishSingleFile>
-				<PublishTrimmed>true</PublishTrimmed>
 				<AssemblyName>$(MSBuildProjectName)-$(RuntimeIdentifier)</AssemblyName>
 			</PropertyGroup>
 		</When>
