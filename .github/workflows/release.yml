@@ -3,11 +3,18 @@ name: Build and Release
 on:
   workflow_dispatch:
 
+env:
+  TARGET_PROJECT_DIR_NAME: Blue-Archive-Assets-Converter
+  BUILD_COMMAND: dotnet publish -r $ARCH -o output
+
 jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+    defaults:
+      run:
+        working-directory: ${{ env.TARGET_PROJECT_DIR_NAME }}
 
     steps:
     - uses: actions/checkout@v4
@@ -18,13 +25,16 @@ jobs:
       with:
         dotnet-version: 8.0.x
     - name: Build for Windows x64
-      run: dotnet publish Blue-Archive-Assets-Converter/Blue-Archive-Assets-Converter.csproj -r win-x64 -p:PublishSingleFile=true -p:PublishTrimmed=true --sc true --artifacts-path output
+      env:
+        ARCH: win-x64
+      run: ${{ env.BUILD_COMMAND }}
     - name: Build for Linux x64
-      run: dotnet publish Blue-Archive-Assets-Converter/Blue-Archive-Assets-Converter.csproj -r linux-x64 -p:PublishSingleFile=true -p:PublishTrimmed=true --sc true --artifacts-path output
+      env:
+        ARCH: linux-x64
+      run: ${{ env.BUILD_COMMAND }}
     - name: Release to Github
       uses: softprops/action-gh-release@v2
       with:
         draft: true
         files: |
-          output/publish/Blue-Archive-Assets-Converter/release_win-x64/Blue-Archive-Assets-Converter.exe
-          output/publish/Blue-Archive-Assets-Converter/release_linux-x64/Blue-Archive-Assets-Converter
+          ${{ env.TARGET_PROJECT_DIR_NAME }}/output/*

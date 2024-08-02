@@ -7,7 +7,19 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <PublishTrimmed>True</PublishTrimmed>
+    <PublishSingleFile>True</PublishSingleFile>
   </PropertyGroup>
+
+  <Choose>
+    <When Condition=" '$(Configuration)'=='Release' ">
+      <PropertyGroup>
+        <DebugSymbols>false</DebugSymbols>
+        <DebugType>None</DebugType>
+        <AssemblyName>$(MSBuildProjectName)-$(RuntimeIdentifier)</AssemblyName>
+      </PropertyGroup>
+    </When>
+  </Choose>
 
   <ItemGroup>
     <PackageReference Include="MemoryPack" Version="1.21.1" />
