@@ -4,13 +4,22 @@ on:
   workflow_dispatch:
 
 env:
-  BUILD_COMMAND: dotnet publish -r $ARCH -p:Publish=true -o output
+  TARGET_PROJECT_DIR_NAME: Blue-Archive-Assets-Converter
+  BUILD_COMMAND: |
+              echo Current directory:
+              pwd
+              ls
+              echo Starting build
+              dotnet publish -r $ARCH -o output
 
 jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+    defaults:
+      run:
+        working-directory: ${{ env.TARGET_PROJECT_DIR_NAME }}
 
     steps:
     - uses: actions/checkout@v4
