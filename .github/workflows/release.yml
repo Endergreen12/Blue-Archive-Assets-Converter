@@ -4,8 +4,7 @@ on:
   workflow_dispatch:
 
 env:
-  PROJECT_NAME: Blue-Archive-Assets-Converter
-  BUILD_COMMAND: dotnet publish $PROJECT_NAME/$PROJECT_NAME.csproj -r $ARCH -p:PublishSingleFile=true,PublishTrimmed=true,DebugType=None,DebugSymbols=false,AssemblyName=$PROJECT_NAME-$ARCH --sc true -o output
+  BUILD_COMMAND: dotnet publish -r $ARCH -p:Publish=true -o output
 
 jobs:
   build:
