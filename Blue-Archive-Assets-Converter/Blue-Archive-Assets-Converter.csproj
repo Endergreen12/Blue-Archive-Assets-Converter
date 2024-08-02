@@ -9,6 +9,18 @@
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
   </PropertyGroup>
 
+	<Choose>
+		<When Condition=" '$(Publish)'=='true' ">
+			<PropertyGroup>
+				<DebugSymbols>false</DebugSymbols>
+				<DebugType>None</DebugType>
+				<PublishSingleFile>true</PublishSingleFile>
+				<PublishTrimmed>true</PublishTrimmed>
+				<AssemblyName>$(MSBuildProjectName)-$(RuntimeIdentifier)</AssemblyName>
+			</PropertyGroup>
+		</When>
+	</Choose>
+
   <ItemGroup>
     <PackageReference Include="MemoryPack" Version="1.21.1" />
   </ItemGroup>
