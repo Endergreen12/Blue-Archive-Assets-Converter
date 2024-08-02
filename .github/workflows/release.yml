@@ -5,12 +5,7 @@ on:
 
 env:
   TARGET_PROJECT_DIR_NAME: Blue-Archive-Assets-Converter
-  BUILD_COMMAND: |
-              echo Current directory:
-              pwd
-              ls
-              echo Starting build
-              dotnet publish -r $ARCH -o output
+  BUILD_COMMAND: dotnet publish -r $ARCH -o output
 
 jobs:
   build:
@@ -42,4 +37,4 @@ jobs:
       with:
         draft: true
         files: |
-          output/*
+          ${{ env.TARGET_PROJECT_DIR_NAME }}/output/*
