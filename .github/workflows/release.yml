@@ -1,10 +1,11 @@
-# This workflow will build a .NET project
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
-
 name: Build and Release
 
 on:
   workflow_dispatch:
+
+env:
+  PROJECT_NAME: Blue-Archive-Assets-Converter
+  BUILD_COMMAND: dotnet publish $PROJECT_NAME/$PROJECT_NAME.csproj -r $ARCH -p:PublishSingleFile=true,PublishTrimmed=true,DebugType=None,DebugSymbols=false,AssemblyName=$PROJECT_NAME-$ARCH --sc true -o output
 
 jobs:
   build:
@@ -20,16 +21,17 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.0.x
-    - name: Restore dependencies
-      run: dotnet restore
     - name: Build for Windows x64
-      run: dotnet publish -r win-x64
+      env:
+        ARCH: win-x64
+      run: ${{ env.BUILD_COMMAND }}
     - name: Build for Linux x64
-      run: dotnet publish -r linux-x64
+      env:
+        ARCH: linux-x64
+      run: ${{ env.BUILD_COMMAND }}
     - name: Release to Github
       uses: softprops/action-gh-release@v2
       with:
         draft: true
         files: |
-          Blue-Archive-Assets-Converter/bin/Release/net8.0/win-x64/publish/Blue-Archive-Assets-Converter.exe
-          Blue-Archive-Assets-Converter/bin/Release/net8.0/linux-x64/publish/Blue-Archive-Assets-Converter
+          output/*
